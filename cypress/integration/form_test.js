@@ -7,7 +7,9 @@ const specialInstructions = uuid().slice(0,19)
 
 describe('Form Component Testing', ()=> {
     it('can navigate to the page', ()=> {
-        cy.visit('http://localhost:3000/pizza')
+        cy.visit('http://localhost:3000/')
+        .get('button')
+        .click()
     })
 
     it('can submit a form', ()=> {
