@@ -92,12 +92,6 @@ const App = () => {
       quantity: formValues.quantity,
       totalCost: formValues.totalCost,
     }
-
-    // const newOrder = {
-    //   ...formValues,
-
-    // }
-    
     postOrder(newOrder)
     setFormValues(initalFormValues)
   }

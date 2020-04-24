@@ -22,6 +22,12 @@ describe('Form Component Testing', ()=> {
 
         cy.get('select[name="size"]')
             .select('M')
+        
+        cy.get('input[name="pepperoni"]')
+            .click()
+
+        cy.get('input[name="bacon"]')
+            .click()
 
         cy.get('input[name="specialInstructions"')
             .type(specialInstructions)  
