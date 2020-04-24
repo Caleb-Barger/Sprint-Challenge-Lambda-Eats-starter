@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
-import {Switch, Route} from 'react-router-dom'
+import {Switch, Route, useHistory} from 'react-router-dom'
 import * as yup from 'yup'
 import axios from 'axios'
 import Home from './components/Home'
 import Pizza from './components/Pizza'
+import SucsessSubmission from './components/SucsessSubmission'
 
 const url = 'https://reqres.in/api/users'
 
@@ -19,7 +20,7 @@ const initalFormValues = {
     bacon: false,
   },
   specialInstructions: '',
-  quantity: 0,
+  quantity: 1,
   totalCost: 0,
 }
 
@@ -40,15 +41,14 @@ const formSchema = yup.object().shape({
     .string()
     .required('address is required'),
   size: yup
-    .string()
-    .required('please choose a size'),
+    .string(),
   // toppings: yup
   //   .boolean(),
   specialInstructions: yup
     .string()
     .max(1000, 'pls narrow down your special request'),
   quantity: yup
-    .string()
+    .number()
     .required('pls select your quantity')
 })
 
@@ -56,6 +56,7 @@ const App = () => {
   const [formValues, setFormValues] = useState(initalFormValues)
   const [formErrors, setFormErrors] = useState(initalFormErrors)
   const [submitDisabled, setSubmitDisabled] = useState(true)
+  const history = useHistory()
 
   // const [order, setOrder] = useState({})
 
@@ -87,13 +88,14 @@ const App = () => {
       size: formValues.size,
       toppings: Object.keys(formValues.toppings)
         .filter(topping => formValues.toppings[topping] === true),
-      // toppings: formValues.toppings,
       specialInstructions: formValues.specialInstructions,
       quantity: formValues.quantity,
       totalCost: formValues.totalCost,
     }
     postOrder(newOrder)
     setFormValues(initalFormValues)
+    // window.location.pathname = '/yaaa'
+    history.push('/yaaa')
   }
 
   const changeHandler = evt => {
@@ -144,7 +146,9 @@ const App = () => {
           submitDisabled={submitDisabled}
           submitHandler={submitHandler}/>
       </Route>
-      
+      <Route path='/yaaa'>
+        <SucsessSubmission />
+      </Route>
       <Route path='/'>
         <Home />
       </Route>

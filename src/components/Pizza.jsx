@@ -117,7 +117,6 @@ const Pizza = props => {
                     <br />
                 </label>
                 <button disabled={submitDisabled} name="my-button" onClick={submitHandler}>Add To Cart - $0.00</button>
-
             </form>
         </div>
     )
