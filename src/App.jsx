@@ -32,25 +32,24 @@ const formSchema = yup.object().shape({
     .string()
     .min(2, 'a name must include at least 2 characters')
     .required('a name is required'),
-  // number: yup
-  //   .number()
-  //   .min(10, "must be a valid phone number")
-  //   .required('phone number is required'),
-  // address: yup
-  //   .string()
-  //   .required('address is required'),
-  // size: yup
-  //   .string()
-  //   .required('please choose a size'),
+  number: yup
+    .string()
+    // .min(10, "must be a valid phone number")
+    .required('phone number is required'),
+  address: yup
+    .string()
+    .required('address is required'),
+  size: yup
+    .string()
+    .required('please choose a size'),
   // toppings: yup
-    
   //   .boolean(),
-  // specialInstructions: yup
-  //   .string()
-  //   .max(1000, 'pls narrow down your special request'),
-  // quantity: yup
-  //   .number()
-  //   .required('pls select your quantity')
+  specialInstructions: yup
+    .string()
+    .max(1000, 'pls narrow down your special request'),
+  quantity: yup
+    .string()
+    .required('pls select your quantity')
 })
 
 const App = () => {
@@ -64,7 +63,7 @@ const App = () => {
   const postOrder = currentOrder => {
     axios.post(url, currentOrder)
       .then(res => {
-        console.log(res.data)
+        console.log(res)
       })
       .catch(err => {
         debugger
@@ -88,17 +87,40 @@ const App = () => {
       size: formValues.size,
       toppings: Object.keys(formValues.toppings)
         .filter(topping => formValues.toppings[topping] === true),
+      // toppings: formValues.toppings,
       specialInstructions: formValues.specialInstructions,
       quantity: formValues.quantity,
       totalCost: formValues.totalCost,
     }
+
+    // const newOrder = {
+    //   ...formValues,
+
+    // }
+    
     postOrder(newOrder)
-    setFormValues(initalFormErrors)
+    setFormValues(initalFormValues)
   }
 
   const changeHandler = evt => {
     const name = evt.target.name
     const value = evt.target.value
+
+    yup
+      .reach(formSchema, name)
+      .validate(value)
+      .then(valid => {
+        setFormErrors({
+          ...formErrors,
+          [name]: '',
+        })
+      })
+      .catch(err => {
+        setFormErrors({
+          ...formErrors,
+          [name]: err.errors[0]
+        })
+      })
 
     setFormValues({
       ...formValues, 
@@ -123,7 +145,6 @@ const App = () => {
     <Switch>
       <Route path='/pizza'>
         <Pizza formValues={formValues}
-          toppings={formValues.toppings}
           changeHandler={changeHandler}
           checkBoxChangeHandler={checkBoxChangeHandler}
           submitDisabled={submitDisabled}

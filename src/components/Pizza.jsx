@@ -3,7 +3,6 @@ import React from 'react'
 const Pizza = props => {
     const {
         formValues,
-        toppings,
         changeHandler,
         checkBoxChangeHandler,
         submitDisabled,
@@ -52,7 +51,7 @@ const Pizza = props => {
                     </select>
                     <br/>
                 </label>
-                {/* <label htmlFor="Toppings">
+                {/* <label htmlFor="Toppings"> */}
                     Toppings:
                     <br/>
                     <label htmlFor="Pepperoni">
@@ -60,18 +59,19 @@ const Pizza = props => {
                         <input
                             type='checkbox'
                             name='pepperoni'
-                            checked={toppings.pepperoni}
+                            checked={formValues.toppings.pepperoni}
                             onChange={checkBoxChangeHandler}
                         />
                         <br />
                     </label>
+                    
                     <label htmlFor="Ham">
                         Ham: 
                         <input
+                            checked={formValues.toppings.ham}
+                            onChange={checkBoxChangeHandler}
                             type='checkbox'
                             name='ham'
-                            checked={toppings.ham}
-                            onChange={checkBoxChangeHandler}
                         />
                         <br />
                     </label>
@@ -80,7 +80,7 @@ const Pizza = props => {
                         <input
                             type='checkbox'
                             name='pineapple'
-                            checked={toppings.pineapple}
+                            checked={formValues.toppings.pineapple}
                             onChange={checkBoxChangeHandler}
                         />
                         <br />
@@ -90,12 +90,12 @@ const Pizza = props => {
                         <input
                             type='checkbox'
                             name='bacon'
-                            checked={toppings.bacon}
+                            checked={formValues.toppings.bacon}
                             onChange={checkBoxChangeHandler}
                         />
                         <br />
                     </label>
-                </label> */}
+                {/* </label> */}
                 <label htmlFor="Special Instructions">
                     Special Instructions: 
                     <input
